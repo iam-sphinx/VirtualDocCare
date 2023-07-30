@@ -14,8 +14,8 @@ const DocCard = ({imgSrc}) => {
         <p>New York, NY</p>
       </div>
       <p className=" h-[3.75rem] overflow-hidden text-ellipsis font-light text-sm text-[#5c636a] ">
-        "Wonderful two experiences so far -quick wait times (meanings no wait
-        times). Go my vacations blood work done quickly..."
+      &ldquo;Wonderful two experiences so far -quick wait times (meanings no wait
+        times). Go my vacations blood work done quickly...&ldquo;
       </p>
       <div className="w-40 h-8 rounded-lg bg-[#d8efea] flex items-center px-2 text-[#656e73] gap-1">
         <StarIcon className="h-5 w-5 "/>
