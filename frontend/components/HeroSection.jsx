@@ -12,7 +12,7 @@ const HeroSection = () => {
         </button>
       </div>
       <div className="h-[32rem] w-[32rem] relative">
-        <Image src="/doc.png" fill="auto" className="object-contain" />
+        <Image src="/doc.png" fill="auto" className="object-contain" alt="not-found" />
       </div>
     </div>
   );
