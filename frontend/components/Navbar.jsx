@@ -1,42 +1,15 @@
 "use client";
 
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Modal,
-  OutlinedInput,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Modal } from "@mui/material";
 import React, { useState } from "react";
 import IosSwitch from "./IosSwitch";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import LoginForm from "./LoginForm";
 
 const Navbar = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    username: " ",
-    mobile_no: " ",
-    mail_id: " ",
-    password: " ",
-  });
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
   const handleOpen = () => {
     setIsLogin(!isLogin);
   };
-
   return (
     <>
       <Modal
@@ -60,58 +33,7 @@ const Navbar = () => {
           <h1 className="text-xl font-medium text-center mt-4 text-[#2d3136]">
             Please enter your details
           </h1>
-
-          <TextField
-            helperText="Please enter your name"
-            id="demo-helper-text-aligned"
-            label="Name"
-            className="w-full"
-          />
-
-          <TextField
-            helperText="Please enter your email"
-            id="demo-helper-text-aligned"
-            label="Email"
-            className="w-full"
-          />
-
-          <FormControl variant="outlined" className="w-full">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
-
-          <TextField
-            helperText="Repeat Password"
-            id="demo-helper-text-aligned"
-            label="Password"
-            type="text"
-            className="w-full"
-          />
-          <div className="flex items-center gap-3">
-            <Button variant="contained" color="success" className="w-40">
-              Sign up
-            </Button>
-            <h1 className="text-base font-medium text-[#30353a]">Already have an account ?</h1>
-            <span className="text-lg font-medium cursor-pointer hover:underline text-[#30353a]">Login</span>
-          </div>
+          <LoginForm />
         </div>
       </Modal>
 

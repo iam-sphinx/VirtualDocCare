@@ -6,7 +6,7 @@ const DocCard = ({imgSrc}) => {
   return (
     <div className="w-96 h-[26rem] rounded-2xl p-3 border border-stone-800 flex flex-col justify-between shadow-lg shadow-slate-500">
       <div className="w-full h-52 rounded-2xl overflow-hidden shadow-md shadow-slate-600">
-        <img src={imgSrc}  className="object-cover h-full w-full" />
+        <img src={imgSrc}  className="object-cover h-full w-full" alt="not-found" />
       </div>
       <h1 className="font-medium text-base mt-2">Douglas Bailyn , MD</h1>
       <div className="font-normal text-sm italic">
