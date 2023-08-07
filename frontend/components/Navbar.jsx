@@ -39,7 +39,7 @@ const Navbar = () => {
 
       <div className="h-20 w-full flex justify-between items-center bg-[#3A786B] px-32">
         <h1 className="text-2xl text-white font-bold cursor-pointer">
-          VirtualDocCare
+          VirtualDoc Care
         </h1>
         <div>
           <ul className="flex gap-10 text-white font-medium text-lg">
