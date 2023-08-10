@@ -24,6 +24,10 @@ const userSchema = new Schema(
         message: (props) => `${props.value} is not a valid email address!`,
       },
     },
+    phone: {
+      type: String,
+      required: false,
+    },
     role: {
       type: String,
       required: true,
@@ -31,7 +35,7 @@ const userSchema = new Schema(
     },
     patientId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Patient",
     },
     doctorId: {
       type: Schema.Types.ObjectId,

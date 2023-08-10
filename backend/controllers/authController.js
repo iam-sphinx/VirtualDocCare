@@ -6,7 +6,7 @@ import User from "../mongodb/models/User.js";
 // User Signup
 export const signup = async (req, res, next) => {
   try {
-    const { username, password, email, role } = req.body;
+    const { username, password, email, role , phone} = req.body;
 
     // Check if username or email already exists
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
@@ -24,6 +24,7 @@ export const signup = async (req, res, next) => {
       password: hashedPassword,
       email,
       role,
+      phone,
     });
 
     await newUser.save();
