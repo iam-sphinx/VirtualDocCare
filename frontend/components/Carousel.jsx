@@ -1,8 +1,8 @@
 "use client"
-import  React,{useState,useEffect}  from "react";
+import React, { useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import DocCard from "./DocCard";
 
 const Carousel = ({ images }) => {
@@ -39,15 +39,13 @@ const Carousel = ({ images }) => {
         <ChevronLeftIcon className="h-5 w-5 text-white" />
       </motion.div>
       <div className="flex gap-8">
- 
-  <AnimatePresence initial={ false } mode={ 'wait' }>
-`
+      <AnimatePresence initial={ false } mode={ 'wait' }>
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0, x: direction === "right" ? 100 : -100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: direction === "right" ? -100 : 100 }}
-            transition={{ duration: 0.6, ease: "easeIn" }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <DocCard imgSrc={images[currentIndex]} />
           </motion.div>
@@ -58,7 +56,7 @@ const Carousel = ({ images }) => {
             initial={{ opacity: 0, x: direction === "right" ? 100 : -100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: direction === "right" ? -100 : 100 }}
-            transition={{ duration: 0.6, ease: "easeIn" }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <DocCard imgSrc={images[nextIndex]} />
           </motion.div>
