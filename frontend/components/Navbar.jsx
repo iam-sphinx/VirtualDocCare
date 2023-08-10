@@ -2,38 +2,65 @@
 
 import { Modal } from "@mui/material";
 import React, { useState } from "react";
-import IosSwitch from "./IosSwitch";
+import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 
 const Navbar = () => {
+  const [isSignup, setIsSignup] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const handleOpen = () => {
-    setIsLogin(!isLogin);
+  const handleClose = () => {
+    setIsSignup(false);
+    setIsLogin(false);
   };
+
+  const handleSignup = () => {
+    setIsSignup(true);
+  };
+
   return (
     <>
       <Modal
-        open={isLogin}
-        onClose={handleOpen}
+        open={isSignup}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className="flex items-center justify-center"
+        className="flex items-center justify-center cursor-pointer"
       >
         <div className="w-[30rem] h-[40rem] p-6 rounded-2xl bg-[#d8efea] outline-none flex flex-col justify-between">
-          <div className="flex justify-center items-center font-semibold text-2xl text-[#30353a]">
-            <div className="flex justify-between items-center w-64">
-              <h1>Patient</h1>
-              <IosSwitch />
-              <h1>Doctor</h1>
-            </div>
-          </div>
           <h1 className="text-3xl font-bold text-center mt-6 text-[#2d3136]">
             Welcome to VirtualDoc Care
           </h1>
           <h1 className="text-xl font-medium text-center mt-4 text-[#2d3136]">
             Please enter your details
           </h1>
-          <LoginForm />
+          <SignUpForm
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            isSignup={isSignup}
+            setIsSignup={setIsSignup}
+          />
+        </div>
+      </Modal>
+      <Modal
+        open={isLogin}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex items-center justify-center cursor-pointer"
+      >
+        <div className="w-[30rem] h-[rem] p-6 rounded-2xl bg-[#d8efea] outline-none flex flex-col justify-between">
+          <h1 className="text-3xl font-bold text-center mt-6 text-[#2d3136]">
+            Welcome to VirtualDoc Care
+          </h1>
+          <h1 className="text-xl font-medium text-center mt-4 text-[#2d3136]">
+            Please enter your details
+          </h1>
+          <LoginForm
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            isSignup={isSignup}
+            setIsSignup={setIsSignup}
+          />
         </div>
       </Modal>
 
@@ -47,7 +74,7 @@ const Navbar = () => {
             <li className="cursor-pointer hover:text-[#B6D3CD]">Reviews</li>
             <li
               className="cursor-pointer hover:text-[#B6D3CD]"
-              onClick={handleOpen}
+              onClick={handleSignup}
             >
               Log in / Sign up
             </li>

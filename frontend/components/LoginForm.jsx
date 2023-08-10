@@ -1,123 +1,76 @@
-"use client";
+import axios from "axios";
 import React, { useState } from "react";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
 
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const LoginForm = ({ isLogin, setIsLogin, isSignup, setIsSignup }) => {
   const [formData, setFormData] = useState({
-    username: " ",
-    phone: " ",
-    email: " ",
-    password: " ",
+    username: "",
+    password: "",
   });
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  };
-
-  //form data
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Hey here is your form Data");
-    console.log("Form Data :", formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:7070/api/v1/auth/signin",
+        formData
+      );
+      if (response.data.success) {
+        console.log("Login Successful", response.data.message);
+      } else {
+        consolg.log("Login Failed", response.data.message);
+      }
+      setIsLogin(false);
+    } catch (error) {
+      console.log({
+        success: false,
+        message: "User not found",
+        error,
+      });
+    }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleIsSignup = () => {
+    setIsLogin(false);
+    setIsSignup(true);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex-1 flex flex-col justify-between"
+      className="flex-1 flex flex-col justify-start gap-8 mt-8"
     >
-      <TextField
-        helperText="Please enter your name"
-        id="demo-helper-text-aligned"
-        label="Name"
+      <input
         name="username"
+        type="text"
         value={formData.username}
+        placeholder="enter your username"
         onChange={handleChange}
-        className="w-full"
+        className="input w-full text-black font-normal text-base bg-inherit border border-black placeholder:text-zinc-500 "
       />
-
-      <TextField
-        helperText="Please enter your email"
-        id="demo-helper-text-aligned"
-        label="Email"
-        name="email"
-        value={formData.email}
+      <input
+        name="password"
+        placeholder="enter your password"
+        type="text"
+        value={formData.password}
         onChange={handleChange}
-        className="w-full"
+        className="input w-full text-black font-normal text-base bg-inherit border border-black placeholder:text-zinc-500 "
       />
-
-      <TextField
-        helperText="Please enter your Phone no"
-        id="demo-helper-text-aligned"
-        label="Phone"
-        name="phone"
-        type="tel"
-        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-        value={formData.phone}
-        onChange={handleChange}
-        className="w-full"
-      />
-
-      <FormControl variant="outlined" className="w-full">
-        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          value={formData.password}
-          onChange={handleChange}
-          name="password"
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          label="Password"
-        />
-      </FormControl>
-
-      <div className="flex items-center gap-3">
-        <Button
-          type="submit"
-          variant="contained"
-          color="success"
-          className="w-40"
-        >
-          Sign up
-        </Button>
-        <h1 className="text-base font-medium text-[#30353a]">
-          Already have an account ?
-        </h1>
-        <span className="text-lg font-medium cursor-pointer hover:underline text-[#30353a]">
+      <div className="flex items-center justify-between">
+        <button className="btn btn-accent w-40" type="submit">
           Login
+        </button>
+        <h1 className="text-base font-medium text-[#30353a]">
+          New to Virtual Doc Care ?
+        </h1>
+        <span
+          className="text-lg font-medium cursor-pointer hover:underline text-[#30353a]"
+          onClick={handleIsSignup}
+        >
+          Register
         </span>
       </div>
     </form>
