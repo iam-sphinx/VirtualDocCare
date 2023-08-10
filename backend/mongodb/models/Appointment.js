@@ -13,7 +13,15 @@ const appointmentSchema = new Schema(
       ref: "User", // Reference to the User model for the doctor
       required: true,
     },
-    dateTime: {
+    appointmentDate: {
+      type: Date,
+      required: true,
+    },
+    startTime: {
+      type: Date,
+      required: true,
+    },
+    endTime: {
       type: Date,
       required: true,
     },
