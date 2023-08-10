@@ -29,6 +29,14 @@ const userSchema = new Schema(
       required: true,
       enum: ["patient", "doctor"], // Add more roles if needed
     },
+    patientId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    doctorId: {
+      type: Schema.Types.ObjectId,
+      ref: "Doctor",
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields
