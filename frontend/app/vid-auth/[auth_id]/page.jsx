@@ -1,8 +1,8 @@
 "use client";
 import { useSocket } from "@/context/SocketContext";
-import { usePathname } from "next/navigation";
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const VideoCallPage = () => {
   const router = useRouter();
@@ -10,6 +10,12 @@ const VideoCallPage = () => {
     email: "",
     room: "",
   });
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    setFormData({ ...formData, email: currentUser.data._id });
+  }, [currentUser]);
+
   const socket = useSocket();
 
   const handleSubmit = (event) => {
@@ -21,8 +27,6 @@ const VideoCallPage = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const pathname = usePathname();
 
   const handleJoinRoom = useCallback((data) => {
     const { email, room } = data;
@@ -38,15 +42,7 @@ const VideoCallPage = () => {
 
   return (
     <div>
-      Video Call ID: {pathname.split("/")[2]}
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-[24rem]">
-        <input
-          className="input input-accent"
-          type="text"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
 
         <input
           className="input input-accent"

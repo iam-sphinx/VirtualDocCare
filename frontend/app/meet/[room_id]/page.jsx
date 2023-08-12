@@ -164,30 +164,7 @@ const Page = () => {
       </div>
     </div>
 
-    //
-    //      <h1> This is my Room Page</h1>
-    //       <h3>{remoteSocketId ? "connected" : "No one is in the room"} </h3>
-    //       {myStream && <button onClick={sendStreams}>Send Stream</button>}
-    //       {remoteSocketId && <button onClick={handleCallUser}>Call</button>}
-    //           {myStream && (
-    //   <ReactPlayer
-    //     url={myStream}
-    //     height="250px"
-    //     width="300px"
-    //     playing
-    //     muted
-    //   />
-    // )}
-    // <h1>Remote Stream</h1>
-    // {remoteStream && (
-    //   <ReactPlayer
-    //     url={remoteStream}
-    //     height="250px"
-    //     width="300px"
-    //     playing
-    //     muted
-    //   />
-    // )}
+    
   );
 };
 
