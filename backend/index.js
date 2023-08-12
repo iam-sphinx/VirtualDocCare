@@ -24,34 +24,39 @@ app.use(cookieParser());
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: true });
 
-const emailToSocketMap = new Map();
+const emailToSocketIdMap = new Map();
 const socketidToEmailMap = new Map();
+
 io.on("connection", (socket) => {
-  socket.on("room-join", (data) => {
-    const { email, room_id } = data;
-    emailToSocketMap.set(email, socket.id);
+  console.log(`Socket Connected`, socket.id);
+  socket.on("room:join", (data) => {
+    const { email, room } = data;
+    emailToSocketIdMap.set(email, socket.id);
     socketidToEmailMap.set(socket.id, email);
-    io.to(room_id).emit("user-joined", { email, id: socket.id });
-    socket.join(room_id);
-    io.to(socket.id).emit("room-join", data);
+    io.to(room).emit("user:joined", { email, id: socket.id });
+    socket.join(room);
+    io.to(socket.id).emit("room:join", data);
   });
 
-  socket.on("call-user", ({ to, offer }) => {
-    io.to(to).emit("incomming-call", { from: socket.id, offer });
+  socket.on("user:call", ({ to, offer }) => {
+    io.to(to).emit("incomming:call", { from: socket.id, offer });
   });
 
-  socket.on("call-accepted", ({ to, ans }) => {
-    io.to(to).emit("call-accepted", { from: socket.id, ans });
+  socket.on("call:accepted", ({ to, ans }) => {
+    io.to(to).emit("call:accepted", { from: socket.id, ans });
   });
 
-  socket.on("peer-negotiated", ({ to, offer }) => {
-    io.to(to).emit("peer-negotiated", { from: socket.id, offer });
+  socket.on("peer:nego:needed", ({ to, offer }) => {
+    console.log("peer:nego:needed", offer);
+    io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
   });
 
-  socket.on("peer-nego-done", ({ to, ans }) => {
-    io.to(to).emit("peer-nego-done-final", { from: socket.id, ans });
+  socket.on("peer:nego:done", ({ to, ans }) => {
+    console.log("peer:nego:done", ans);
+    io.to(to).emit("peer:nego:final", { from: socket.id, ans });
   });
 });
+
 // Rest APIs
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/appointments", appointmentRoutes);

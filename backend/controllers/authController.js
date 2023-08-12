@@ -3,10 +3,11 @@ import bcrypt from "bcryptjs";
 import { createError } from "../error.js";
 import User from "../mongodb/models/User.js";
 
+
 // User Signup
 export const signup = async (req, res, next) => {
   try {
-    const { username, password, email, role , phone} = req.body;
+    const { username, password, email, role, phone } = req.body;
 
     // Check if username or email already exists
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
