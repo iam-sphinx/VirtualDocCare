@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 // import { FiEdit2 } from "react-icons/fi";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import SideComponent from "@/components/SideComponent";
 import DocProfile from "@/components/DocProfile";
 import { Modal } from "@mui/material";
@@ -21,9 +22,7 @@ const Page = () => {
         className="flex items-center justify-center cursor-pointer"
       >
         <div className="h-[36rem] w-[64rem] bg-white rounded-[20px] p-6 overflow-hidden">
-          <div className="w-full h-full">
-            
-          </div>
+          <div className="w-full h-full"></div>
         </div>
       </Modal>
       <div className="lg:px-96 px-6 mt-6">
@@ -32,7 +31,7 @@ const Page = () => {
             className="btn btn-outline btn-accent text-sm shadow-lg"
             onClick={handleEdit}
           >
-            {/* <FiEdit2 /> */}
+            <PencilSquareIcon className="h-6 w-6"/>
             Edit profile
           </button>
         </div>
