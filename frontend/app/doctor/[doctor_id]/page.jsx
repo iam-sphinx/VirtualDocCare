@@ -39,6 +39,7 @@ const Page = () => {
         <div className="flex justify-start gap-24">
           <SideComponent />
           <DocProfile />
+          
         </div>
       </div>
     </>
