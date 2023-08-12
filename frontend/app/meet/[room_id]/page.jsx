@@ -6,7 +6,7 @@ import peer from "@/service/peer";
 
 import React, { useCallback, useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const pathname = usePathname();
   console.log(pathname);
 
@@ -148,4 +148,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

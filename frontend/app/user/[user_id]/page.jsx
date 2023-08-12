@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const [userId, setUserId] = useState("");
   const [userData, serUserData] = useState({});
   const pathname = usePathname();
@@ -25,4 +25,4 @@ const page = () => {
   return <div className="flex-1"></div>;
 };
 
-export default page;
+export default Page;
