@@ -120,56 +120,54 @@ const Page = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-[#B6D3CD] p-6 gap-6 ">
-  <div className="bg-white flex flex-1 flex-nowrap relative rounded-xl overflow-hidden ">
-    <div className="absolute top-6 left-6 h-40 w-60 bg-slate-500 rounded-md overflow-hidden">
-      {remoteStream && (
-        <ReactPlayer
-          url={remoteStream}
-          width="100%"
-          height="100%"
-          playing
-          muted
-        />
-      )}
-    </div>
-
-    <div className="flex-1 max-h-[33.5rem] ">
-      {myStream ? (
-        <ReactPlayer
-          url={myStream}
-          playing
-          muted
-          width="100%"
-          height="100%"
-        />
-      ) : (
-        <div className="flex justify-center items-center w-full h-full">
-          <Image src={img_src} alt="no user" height={250} width={250} />
+      <div className="bg-white flex flex-1 flex-nowrap relative rounded-xl overflow-hidden ">
+        <div className="absolute top-6 left-6 h-40 w-60 bg-slate-500 rounded-md overflow-hidden">
+          {myStream ? (
+            <ReactPlayer
+              url={myStream}
+              playing
+              width="100%"
+              height="100%"
+            />
+          ) : (
+            <div className="flex justify-center items-center w-full h-full">
+              <Image src={img_src} alt="no user" height={250} width={250} />
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="flex-1 max-h-[33.5rem] ">
+          {remoteStream && (
+            <ReactPlayer
+              url={remoteStream}
+              width="100%"
+              height="100%"
+              playing
+              muted
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="bg-white h-14 rounded-xl flex justify-center items-center  gap-16  border border-black ">
+        {remoteSocketId && (
+          <button
+            onClick={handleCallUser}
+            className="btn btn-info w-40 text-white"
+          >
+            Connect Call
+          </button>
+        )}
+        {myStream && (
+          <button onClick={sendStreams} className="btn btn-accent w-32 ">
+            <PhoneArrowUpRightIcon className=" text-white flex item-center h-6 w-6" />
+          </button>
+        )}
+        <button className="btn btn-error text-white w-32 ">
+          <PhoneXMarkIcon className=" flex item-center h-8 w-8" />
+        </button>
+      </div>
     </div>
-  </div>
-
-  <div className="bg-white h-14 rounded-xl flex justify-center items-center  gap-16  border border-black ">
-    {remoteSocketId && (
-      <button
-        onClick={handleCallUser}
-        className="btn btn-info w-40 text-white"
-      >
-        Connect Call
-      </button>
-    )}
-    {myStream && (
-      <button onClick={sendStreams} className="btn btn-accent w-32 ">
-        <PhoneArrowUpRightIcon className=" text-white flex item-center h-6 w-6" />
-      </button>
-    )}
-    <button className="btn btn-error text-white w-32 ">
-      <PhoneXMarkIcon className=" flex item-center h-8 w-8" />
-    </button>
-  </div>
-</div>
-
   );
 };
 
