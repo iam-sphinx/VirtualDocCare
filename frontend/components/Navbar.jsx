@@ -90,7 +90,9 @@ const Navbar = () => {
                 <div className="flex gap-10 items-center">
                   <h1
                     onClick={() => {
-                      router.push(`/user/${currentUser.data._id}`);
+                      currentUser.data.role === "patient"
+                        ? router.push(`/user/${currentUser.data._id}`)
+                        : router.push(`/doctor/${currentUser.data._id}`);
                     }}
                   >
                     {currentUser.data.username}
@@ -98,6 +100,7 @@ const Navbar = () => {
                   <button
                     className="btn btn-circle btn-error hover:text-[#B6D3CD] text-white text- w-32"
                     onClick={() => {
+                      router.push("/");
                       dispatch(logout());
                     }}
                   >

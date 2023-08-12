@@ -10,13 +10,13 @@ const Page = () => {
   const pathname = usePathname();
   console.log(pathname);
 
+  const socket = useSocket();
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const [myStream, setMyStream] = useState();
   const [remoteStream, setRemoteStream] = useState();
 
-  const socket = useSocket();
   const handleUserJoined = useCallback(({ email, id }) => {
-    console.log(`Email joined ${email} to room`);
+    console.log(`Email ${email} joined room`);
     setRemoteSocketId(id);
   }, []);
 
@@ -25,9 +25,8 @@ const Page = () => {
       audio: true,
       video: true,
     });
-
     const offer = await peer.getOffer();
-    socket.emit("call-user", { to: remoteSocketId, offer });
+    socket.emit("user:call", { to: remoteSocketId, offer });
     setMyStream(stream);
   }, [remoteSocketId, socket]);
 
@@ -39,24 +38,23 @@ const Page = () => {
         video: true,
       });
       setMyStream(stream);
-      const ans = await this.peer.getAnswer(offer);
-      socket.emit("call-accepted", { to: from, ans });
+      console.log(`Incoming Call`, from, offer);
+      const ans = await peer.getAnswer(offer);
+      socket.emit("call:accepted", { to: from, ans });
     },
     [socket]
   );
 
   const sendStreams = useCallback(() => {
     for (const track of myStream.getTracks()) {
-      if (!peer.peer.getSenders().some((sender) => sender.track === track)) {
-        peer.peer.addTrack(track, myStream);
-      }
+      peer.peer.addTrack(track, myStream);
     }
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
     ({ from, ans }) => {
       peer.setLocalDescription(ans);
-      console.log("call accepted");
+      console.log("Call Accepted!");
       sendStreams();
     },
     [sendStreams]
@@ -64,23 +62,8 @@ const Page = () => {
 
   const handleNegoNeeded = useCallback(async () => {
     const offer = await peer.getOffer();
-    socket.emit("peer-negotiated", { offer, to: remoteSocketId });
-  }, [socket]);
-
-  const handleNegoNeedIncoming = useCallback(
-    async ({ from, offer }) => {
-      const ans = await peer.getAnswer(offer);
-      socket.emit("peer-nego-done", { to: from, ans });
-    },
-    [socket]
-  );
-
-  const handleNegoNeedFinal = useCallback(
-    async (ans) => {
-      await peer.setLocalDescription(ans);
-    },
-    [socket]
-  );
+    socket.emit("peer:nego:needed", { offer, to: remoteSocketId });
+  }, [remoteSocketId, socket]);
 
   useEffect(() => {
     peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
@@ -89,33 +72,46 @@ const Page = () => {
     };
   }, [handleNegoNeeded]);
 
+  const handleNegoNeedIncomming = useCallback(
+    async ({ from, offer }) => {
+      const ans = await peer.getAnswer(offer);
+      socket.emit("peer:nego:done", { to: from, ans });
+    },
+    [socket]
+  );
+
+  const handleNegoNeedFinal = useCallback(async ({ ans }) => {
+    await peer.setLocalDescription(ans);
+  }, []);
+
   useEffect(() => {
     peer.peer.addEventListener("track", async (ev) => {
       const remoteStream = ev.streams;
-      setRemoteSocketId(remoteStream[0]);
+      console.log("GOT TRACKS!!");
+      setRemoteStream(remoteStream[0]);
     });
   }, []);
 
   useEffect(() => {
-    socket.on("user-joined", handleUserJoined);
-    socket.on("incomming-call", handleIncommingCall);
-    socket.on("call-accepted", handleCallAccepted);
-    socket.on("peer-negotiated", handleNegoNeedIncoming);
-    socket.on("peer-nego-done-final", handleNegoNeedFinal);
+    socket.on("user:joined", handleUserJoined);
+    socket.on("incomming:call", handleIncommingCall);
+    socket.on("call:accepted", handleCallAccepted);
+    socket.on("peer:nego:needed", handleNegoNeedIncomming);
+    socket.on("peer:nego:final", handleNegoNeedFinal);
 
     return () => {
-      socket.off("user-joined", handleUserJoined);
-      socket.off("incomming-call", handleIncommingCall);
-      socket.off("call-accepted", handleCallAccepted);
-      socket.off("peer-negotiated", handleNegoNeedIncoming);
-      socket.off("peer-nego-done-final", handleNegoNeedFinal);
+      socket.off("user:joined", handleUserJoined);
+      socket.off("incomming:call", handleIncommingCall);
+      socket.off("call:accepted", handleCallAccepted);
+      socket.off("peer:nego:needed", handleNegoNeedIncomming);
+      socket.off("peer:nego:final", handleNegoNeedFinal);
     };
   }, [
     socket,
     handleUserJoined,
     handleIncommingCall,
     handleCallAccepted,
-    handleNegoNeedIncoming,
+    handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
 

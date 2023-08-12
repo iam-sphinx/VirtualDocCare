@@ -5,15 +5,16 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 const VideoCallPage = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
-    room_id: "",
+    room: "",
   });
   const socket = useSocket();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    socket.emit("room-join", formData);
+    socket.emit("room:join", formData);
   };
 
   const handleChange = (event) => {
@@ -24,20 +25,16 @@ const VideoCallPage = () => {
   const pathname = usePathname();
 
   const handleJoinRoom = useCallback((data) => {
-    const { email, room_id } = data;
-    router.push(`/meet/${room_id}`);
+    const { email, room } = data;
+    router.push(`/meet/${room}`);
   }, []);
 
   useEffect(() => {
-    socket.on("room-join", (data) => {
-      handleJoinRoom(data);
-      return () => {
-        socket.off("room-join", handleJoinRoom);
-      };
-    });
-  }, [socket]);
-
-  const router = useRouter();
+    socket.on("room:join", handleJoinRoom);
+    return () => {
+      socket.off("room:join", handleJoinRoom);
+    };
+  }, [socket, handleJoinRoom]);
 
   return (
     <div>
@@ -54,8 +51,8 @@ const VideoCallPage = () => {
         <input
           className="input input-accent"
           type="text"
-          name="room_id"
-          value={formData.room_id}
+          name="room"
+          value={formData.room}
           onChange={handleChange}
         />
 
