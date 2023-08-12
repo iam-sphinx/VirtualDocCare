@@ -9,7 +9,7 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = ({ children }) => {
-  const socket = useMemo(() => io("localhost:7070"), []);
+  const socket = useMemo(() => io("https://virtual-doc-care-backend.onrender.com"), []);
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
