@@ -3,6 +3,8 @@ import { useSocket } from "@/context/SocketContext";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
 import peer from "@/service/peer";
+import { PiPhoneDisconnectLight } from "react-icons/Pi";
+import { BsFillTelephoneForwardFill } from "react-icons/Bs";
 
 import React, { useCallback, useEffect, useState } from "react";
 
@@ -120,31 +122,77 @@ const Page = () => {
   ]);
 
   return (
-    <div>
-      <h1> This is my Room Page</h1>
-      <h3>{remoteSocketId ? "connected" : "No one is in the room"} </h3>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>Call</button>}
-      {myStream && (
-        <ReactPlayer
-          url={myStream}
-          height="250px"
-          width="300px"
-          playing
-          muted
-        />
-      )}
-      <h1>Remote Stream</h1>
-      {remoteStream && (
-        <ReactPlayer
-          url={remoteStream}
-          height="250px"
-          width="300px"
-          playing
-          muted
-        />
-      )}
+    <div className="flex-1 bg-[#B6D3CD]  flex-col justify-center items-center">
+      <div className="bg-white  mt-2 h-[50rem] w-[104rem] mb-2 ml-2  overflow-hidden ">
+        {remoteStream && (
+          <ReactPlayer
+            url={remoteStream}
+            height="200px"
+            width="300px"
+            playing
+            muted
+          />
+        )}
+
+        <div className="bg-black ml-2  h-[15rem] w-[22rem] mx-4 my-6 rounded">
+          {myStream && (
+            <ReactPlayer
+              url={myStream}
+              height="240px"
+              width="358px"
+              playing
+              muted
+            />
+          )}
+        </div>
+      </div>
+      <div className="bg-white ml-2  w-[104rem] h-[4.5rem] mt-0 rounded-2xl flex justify-center items-center  gap-16  border border-black">
+        {remoteSocketId && (
+          <button
+            onClick={handleCallUser}
+            className="bg-[#3A786B] text-lg  rounded-xl  h-14 w-40 text-white"
+          >
+            Connect Call
+          </button>
+        )}
+        {myStream && (
+          <button
+            onClick={sendStreams}
+            className="bg-green-500 rounded-full h-16 w-16 "
+          >
+            <BsFillTelephoneForwardFill className=" text-white flex item-cente h-6 w-6" />
+          </button>
+        )}
+        <button className="bg-red-500 text-white rounded-full h-16 w-16 ">
+          <PiPhoneDisconnectLight className=" flex item-cente h-8 w-8" />
+        </button>
+      </div>
     </div>
+
+    //
+    //      <h1> This is my Room Page</h1>
+    //       <h3>{remoteSocketId ? "connected" : "No one is in the room"} </h3>
+    //       {myStream && <button onClick={sendStreams}>Send Stream</button>}
+    //       {remoteSocketId && <button onClick={handleCallUser}>Call</button>}
+    //           {myStream && (
+    //   <ReactPlayer
+    //     url={myStream}
+    //     height="250px"
+    //     width="300px"
+    //     playing
+    //     muted
+    //   />
+    // )}
+    // <h1>Remote Stream</h1>
+    // {remoteStream && (
+    //   <ReactPlayer
+    //     url={remoteStream}
+    //     height="250px"
+    //     width="300px"
+    //     playing
+    //     muted
+    //   />
+    // )}
   );
 };
 
