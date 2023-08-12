@@ -1,30 +1,30 @@
+import { loginFailure, loginStart, loginSuccess } from "@/redux/userSlice";
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const LoginForm = ({ isLogin, setIsLogin, isSignup, setIsSignup }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const handleSubmit = async (event) => {
     event.preventDefault();
+    dispatch(loginStart());
     try {
       const response = await axios.post(
         "http://localhost:7070/api/v1/auth/signin",
         formData
       );
       if (response.data.success) {
-        console.log("Login Successful", response.data.message);
+        dispatch(loginSuccess(response.data));
       } else {
-        consolg.log("Login Failed", response.data.message);
+        dispatch(loginFailure());
       }
       setIsLogin(false);
     } catch (error) {
-      console.log({
-        success: false,
-        message: "User not found",
-        error,
-      });
+      dispatch(loginFailure());
     }
   };
 
