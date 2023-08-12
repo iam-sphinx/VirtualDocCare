@@ -4,10 +4,18 @@ import { Modal } from "@mui/material";
 import React, { useState } from "react";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { logout } from "@/redux/userSlice";
 
 const Navbar = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const handleClose = () => {
     setIsSignup(false);
     setIsLogin(false);
@@ -65,18 +73,45 @@ const Navbar = () => {
       </Modal>
 
       <div className="h-20 w-full flex justify-between items-center bg-[#3A786B] px-32">
-        <h1 className="text-2xl text-white font-bold cursor-pointer">
+        <h1
+          className="text-2xl text-white font-bold cursor-pointer"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
           VirtualDoc Care
         </h1>
         <div>
-          <ul className="flex gap-10 text-white font-medium text-lg">
+          <ul className="flex gap-10 text-white font-medium text-lg items-center">
             <li className="cursor-pointer hover:text-[#B6D3CD]">About Us</li>
             <li className="cursor-pointer hover:text-[#B6D3CD]">Reviews</li>
-            <li
-              className="cursor-pointer hover:text-[#B6D3CD]"
-              onClick={handleSignup}
-            >
-              Log in / Sign up
+            <li className="cursor-pointer hover:text-[#B6D3CD]">
+              {currentUser ? (
+                <div className="flex gap-10 items-center">
+                  <h1
+                    onClick={() => {
+                      router.push(`/user/${currentUser.data._id}`);
+                    }}
+                  >
+                    {currentUser.data.username}
+                  </h1>
+                  <button
+                    className="btn btn-circle btn-error hover:text-[#B6D3CD] text-white text- w-32"
+                    onClick={() => {
+                      dispatch(logout());
+                    }}
+                  >
+                    Log out
+                  </button>
+                </div>
+              ) : (
+                <li
+                  className="cursor-pointer hover:text-[#B6D3CD]"
+                  onClick={handleSignup}
+                >
+                  Log in / Sign up
+                </li>
+              )}
             </li>
           </ul>
         </div>
