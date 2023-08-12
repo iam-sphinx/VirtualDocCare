@@ -3,9 +3,8 @@ import { useSocket } from "@/context/SocketContext";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
 import peer from "@/service/peer";
-import { PiPhoneDisconnectLight } from "react-icons/Pi";
-import { BsFillTelephoneForwardFill } from "react-icons/Bs";
-
+import { PhoneArrowUpRightIcon } from "@heroicons/react/24/outline";
+import { PhoneXMarkIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect, useState } from "react";
 
 const Page = () => {
@@ -156,11 +155,11 @@ const Page = () => {
             onClick={sendStreams}
             className="bg-green-500 rounded-full h-16 w-16 "
           >
-            <BsFillTelephoneForwardFill className=" text-white flex item-cente h-6 w-6" />
+            <PhoneArrowUpRightIcon className=" text-white flex item-cente h-6 w-6" />
           </button>
         )}
         <button className="bg-red-500 text-white rounded-full h-16 w-16 ">
-          <PiPhoneDisconnectLight className=" flex item-cente h-8 w-8" />
+          <PhoneXMarkIcon className=" flex item-cente h-8 w-8" />
         </button>
       </div>
     </div>
