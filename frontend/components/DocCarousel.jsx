@@ -7,10 +7,6 @@ const images = [
   "/doc-2.jpg",
   "/doc-3.jpg",
   "/doc-4.jpg",
-  "/doc-5.jpg",
-  "/doc-6.jpg",
-  "/doc-7.jpg",
-  "/doc-8.jpg",
 ];
 
 const DocCarousel = () => {
