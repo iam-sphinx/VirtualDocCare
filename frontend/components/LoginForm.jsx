@@ -14,7 +14,7 @@ const LoginForm = ({ isLogin, setIsLogin, isSignup, setIsSignup }) => {
     dispatch(loginStart());
     try {
       const response = await axios.post(
-        "http://localhost:7070/api/v1/auth/signin",
+        "http://virtual-doc-care-backend.onrender.com/api/v1/auth/signin",
         formData
       );
       if (response.data.success) {
