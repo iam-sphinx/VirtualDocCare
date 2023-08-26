@@ -91,7 +91,7 @@ const Navbar = () => {
                   <h1
                     onClick={() => {
                       currentUser.data.role === "patient"
-                        ? router.push(`/user/${currentUser.data._id}`)
+                        ? router.push(`/vid-auth/${currentUser.data._id}`)
                         : router.push(`/doctor/${currentUser.data._id}`);
                     }}
                   >

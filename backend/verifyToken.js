@@ -15,8 +15,6 @@ export const verifyToken = (req, res, next) => {
     // Extract and assign user properties including patientId and doctorId
     req.user = {
       id: decoded.id,
-      patientId: decoded.patientId,
-      doctorId: decoded.doctorId,
     };
 
     next();

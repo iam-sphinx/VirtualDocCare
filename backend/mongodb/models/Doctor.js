@@ -8,6 +8,44 @@ const doctorSchema = new Schema(
       ref: "User", // Reference to the User model
       required: true,
     },
+    age: {
+      type: String,
+      required: true,
+    },
+    sex: {
+      type: String,
+      required: true,
+      enum: ["male", "female", "others"],
+    },
+    location: {
+      type: String,
+      required: false,
+    },
+    marital_status: {
+      type: String,
+      required: false,
+      enum: ["married", "single"],
+    },
+    instagram: {
+      type: String,
+      required: false,
+    },
+    facebook: {
+      type: String,
+      required: false,
+    },
+    bio: {
+      type: String,
+      required: true,
+    },
+    motivation: {
+      type: String,
+      required: true,
+    },
+    desc: {
+      type: String,
+      required: true,
+    },
     specialization: {
       type: String,
       required: true,

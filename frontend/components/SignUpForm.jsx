@@ -18,7 +18,7 @@ const SignUpForm = ({ isLogin, setIsLogin, isSignUp, setIsSignup }) => {
 
     try {
       const response = await axios.post(
-        "https://virtual-doc-care-backend.onrender.com/api/v1/auth/signup",
+        "http://localhost:7070/api/v1/auth/signup",
         formData
       );
 
