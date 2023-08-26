@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { createError } from "../error.js";
 import User from "../mongodb/models/User.js";
-
-
+import Patient from "../mongodb/models/Patient.js";
+import Doctor from "../mongodb/models/Doctor.js";
 
 // User Signup
 export const signup = async (req, res, next) => {
@@ -61,10 +61,7 @@ export const signin = async (req, res, next) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign(
-      { id: user._id, patientId: user.patientId, doctorId: user.doctorId },
-      process.env.JWT_KEY
-    );
+    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
 
     res.cookie("access_token", token, { httpOnly: true }).status(200).json({
       success: true,

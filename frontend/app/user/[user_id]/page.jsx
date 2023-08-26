@@ -10,7 +10,7 @@ const Page = () => {
   const fetchData = async()=>{
     try{
         const response = await axios.get(
-            `https://virtual-doc-care-backend.onrender.com/api/v1/users/${userId}`
+            `http://virtual-doc-care-backend.onrender.com/api/v1/users/${userId}`
           );
         console.log(response);
     } catch(error)
